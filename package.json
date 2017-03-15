@@ -3,8 +3,14 @@
   "name": "@components/tabs",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "lint": "node_modules/.bin/eslint src/**/*.js"
   },
   "author": "case <case@casesandberg.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "eslintConfig": {
+    "extends": "@case/eslint-config"
+  },
+  "devDependencies": {
+    "@case/eslint-config": "^0.1.4"
+  }
 }
