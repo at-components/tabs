@@ -3,7 +3,9 @@ import React from 'react'
 import TabBar from '../TabBar'
 import { shallow, mount } from 'enzyme'
 
-const MockButton = () => {}
+const MockButton = ({ onSelectTab }) => (
+  <div onClick={ onSelectTab } className="button">Button</div>
+)
 
 describe('onMount', () => {
   test('calls 0 as default', () => {
@@ -26,5 +28,30 @@ describe('children', () => {
       </TabBar>,
     )
     expect(rendered.find(MockButton)).toHaveLength(1)
+  })
+})
+
+describe('onSelect', () => {
+  test('should get called when onSelectTab gets called', () => {
+    const handleSelect = jest.fn()
+    const rendered = mount(
+      <TabBar name="TestingSelect" onSelect={ handleSelect }>
+        <MockButton />
+      </TabBar>,
+    )
+    rendered.find('.button').simulate('click')
+    expect(handleSelect).toBeCalledWith({ name: 'TestingSelect', index: 0 })
+  })
+
+  test('curry should relay the right index', () => {
+    const handleSelect = jest.fn()
+    const rendered = mount(
+      <TabBar name="TestingSelect" onSelect={ handleSelect }>
+        <MockButton />
+        <MockButton />
+      </TabBar>,
+    )
+    rendered.find('.button').last().simulate('click')
+    expect(handleSelect).toBeCalledWith({ name: 'TestingSelect', index: 1 })
   })
 })
