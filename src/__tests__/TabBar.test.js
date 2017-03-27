@@ -29,6 +29,35 @@ describe('children', () => {
     )
     expect(rendered.find(MockButton)).toHaveLength(1)
   })
+
+  test('should get onSelectTab', () => {
+    const rendered = mount(
+      <TabBar>
+        <MockButton />
+      </TabBar>,
+    )
+    expect(rendered.find(MockButton).first().props()).toHaveProperty('onSelectTab')
+  })
+
+  test('should know if they are active', () => {
+    const rendered = mount(
+      <TabBar>
+        <MockButton />
+      </TabBar>,
+    )
+    expect(rendered.find(MockButton).first().props()).toHaveProperty('selected', true)
+  })
+
+  test('should have second child selected', () => {
+    const rendered = mount(
+      <TabBar selectIndex={ 1 }>
+        <MockButton />
+        <MockButton />
+      </TabBar>,
+    )
+    expect(rendered.find(MockButton).first().props()).toHaveProperty('selected', false)
+    expect(rendered.find(MockButton).last().props()).toHaveProperty('selected', true)
+  })
 })
 
 describe('onSelect', () => {

@@ -1,22 +1,24 @@
 // @flow
 import React from 'react'
 
-type TabSelectMethod = () => { index: number, name: string }
+type SelectTabData = { index: number, name: string }
 type TabBarProps = {
   name: string,
   children?: React.Children,
-  onSelect: TabSelectMethod
+  selectedIndex: number,
+  onSelect: () => SelectTabData
 }
 
-const TabBar = ({ name, children, onSelect }: TabBarProps) => {
-  const handleSelect = nameAndIndex => () => onSelect(nameAndIndex)
+const TabBar = ({ name, children, selectedIndex, onSelect }: TabBarProps) => {
+  const handleSelect = (data: SelectTabData) => () => onSelect(data)
   return (
     <div>
-      { React.Children.map(children, (child, index) => (
+      { React.Children.map(children, (child, index) =>
         React.cloneElement(child, {
           onSelectTab: handleSelect({ name, index }),
+          selected: index === selectedIndex,
         })
-      )) }
+      ) }
     </div>
   )
 }
@@ -27,7 +29,7 @@ class ConnectedTabBar extends React.Component {
     onMount: () => number,
     selectIndex: number,
     children: React.Children,
-    onSelect: TabSelectMethod
+    onSelect: () => SelectTabData
   }
 
   static defaultProps = {
@@ -45,6 +47,7 @@ class ConnectedTabBar extends React.Component {
         name={ this.props.name }
         index={ 1 }
         onSelect={ this.props.onSelect }
+        selectedIndex={ this.props.selectIndex }
       >
         { this.props.children }
       </TabBar>
