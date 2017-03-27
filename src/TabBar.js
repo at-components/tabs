@@ -2,13 +2,16 @@
 import React from 'react'
 
 type TabBarProps = {
-  index: number
+  index: number,
+  children?: React.Children
 }
 
-export const TabBar = ({ index }: TabBarProps) => {
+const TabBar = ({ index, children }: TabBarProps) => {
   return (
     <div>
-      TabBar { index }
+      { React.Children.map(children, child => (
+        React.cloneElement(child, { onSelectTab: () => {} })
+      )) }
     </div>
   )
 }
@@ -16,7 +19,8 @@ export const TabBar = ({ index }: TabBarProps) => {
 class ConnectedTabBar extends React.Component {
   props: {
     onMount: () => number,
-    selectIndex: number
+    selectIndex: number,
+    children: React.Children
   }
 
   static defaultProps = {
@@ -28,7 +32,7 @@ class ConnectedTabBar extends React.Component {
   }
 
   render() {
-    return <TabBar index={ 1 } />
+    return <TabBar index={ 1 }>{ this.props.children }</TabBar>
   }
 }
 

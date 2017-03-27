@@ -29,7 +29,8 @@
             "render"
           ]
         }
-      ]
+      ],
+      "react/require-default-props": 0
     }
   },
   "babel": {
