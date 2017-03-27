@@ -1,36 +1,35 @@
+// @flow
 import React from 'react'
-import reactCSS from 'reactcss'
 
-export class TabBar extends React.Component {
+type TabBarProps = {
+  index: number
+}
+
+export const TabBar = ({ index }: TabBarProps) => {
+  return (
+    <div>
+      TabBar { index }
+    </div>
+  )
+}
+
+class ConnectedTabBar extends React.Component {
+  props: {
+    onMount: () => number,
+    selectIndex: number
+  }
+
+  static defaultProps = {
+    selectIndex: 0,
+  }
+
   componentDidMount() {
-    this.props.onMount(this.props.selectedIndex)
+    this.props.onMount(this.props.selectIndex)
   }
 
   render() {
-    const styles = reactCSS({
-      default: {
-        wrap: {
-
-        },
-      },
-    })
-
-    return (
-      <div style={ styles.wrap }>
-        TabBar
-      </div>
-    )
+    return <TabBar index={ 1 } />
   }
 }
 
-TabBar.propTypes = {
-  selectedIndex: React.PropTypes.number,
-  onMount: React.PropTypes.func,
-}
-
-TabBar.defaultProps = {
-  selectedIndex: 0,
-  onMount: () => {},
-}
-
-export default TabBar
+export default ConnectedTabBar
