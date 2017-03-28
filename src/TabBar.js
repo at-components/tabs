@@ -5,18 +5,18 @@ type TabBarProps = {
   name: string,
   children?: React.Children,
   selectedIndex: number,
-  onSelect: () => { index: number, name: string }
+  onSelect: ({ index: number, name: string }) => void
 }
 
 const TabBar = ({ name, children, selectedIndex, onSelect }: TabBarProps) => {
-  const handleSelect = (data) => () => onSelect(data)
+  const handleSelect = data => () => onSelect(data)
   return (
     <div>
-      { React.Children.map(children, (child, index) =>
+      { React.Children.map(children, (child, index: number) =>
         React.cloneElement(child, {
           onSelectTab: handleSelect({ name, index }),
           selected: index === selectedIndex,
-        })
+        }),
       ) }
     </div>
   )
@@ -24,7 +24,7 @@ const TabBar = ({ name, children, selectedIndex, onSelect }: TabBarProps) => {
 
 class ConnectedTabBar extends React.Component {
   props: TabBarProps & {
-    onMount: () => number,
+    onMount: (index: number) => void,
     selectIndex: number,
   }
 
