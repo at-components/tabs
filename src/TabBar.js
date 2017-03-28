@@ -60,7 +60,7 @@ export default connect(
   (state: Store, ownProps: ConnectedTabBarProps) => ({
     activeIndex: selectors.getActiveIndexByName(state, ownProps.name),
   }), {
-    onMount: actions.mount,
+    onMount: actions.init,
     onSelect: actions.select,
   },
 )(ConnectedTabBar)
