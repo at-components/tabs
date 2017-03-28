@@ -15,7 +15,7 @@ describe('onMount', () => {
   })
   test('calls 1 when selectedIndex = 1', () => {
     const handleMount = jest.fn()
-    const rendered = mount(<TabBar selectIndex={ 1 } onMount={ handleMount } />)
+    const rendered = mount(<TabBar selectedIndex={ 1 } onMount={ handleMount } />)
     expect(handleMount).toBeCalledWith(1)
   })
 })
@@ -45,18 +45,18 @@ describe('children', () => {
         <MockButton />
       </TabBar>,
     )
-    expect(rendered.find(MockButton).first().props()).toHaveProperty('selected', true)
+    expect(rendered.find(MockButton).first().props()).toHaveProperty('active', true)
   })
 
-  test('should have second child selected', () => {
+  test('should have second child active', () => {
     const rendered = mount(
-      <TabBar selectIndex={ 1 }>
+      <TabBar selectedIndex={ 1 }>
         <MockButton />
         <MockButton />
       </TabBar>,
     )
-    expect(rendered.find(MockButton).first().props()).toHaveProperty('selected', false)
-    expect(rendered.find(MockButton).last().props()).toHaveProperty('selected', true)
+    expect(rendered.find(MockButton).first().props()).toHaveProperty('active', false)
+    expect(rendered.find(MockButton).last().props()).toHaveProperty('active', true)
   })
 })
 
