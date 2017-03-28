@@ -1,8 +1,8 @@
 // @flow
 import React from 'react'
 import { connect } from 'react-redux'
-import { selectors } from './reducer'
-import type { Store, Init, Select } from './reducer'
+import { actions, selectors } from './reducer'
+import type { Store } from './reducer'
 
 type TabBarProps = {
   name: string,
@@ -60,7 +60,7 @@ export default connect(
   (state: Store, ownProps: ConnectedTabBarProps) => ({
     activeIndex: selectors.getActiveIndexByName(state, ownProps.name),
   }), {
-    onMount: ({ name, index }) => ({ type: 'TABS/INIT', name, index }: Init),
-    onSelect: ({ name, index }) => ({ type: 'TABS/SELECT', name, index }: Select),
+    onMount: actions.mount,
+    onSelect: actions.select,
   },
 )(ConnectedTabBar)

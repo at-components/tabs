@@ -20,6 +20,11 @@ export default function reducer(state: Reducer = {}, action: Actions) {
   }
 }
 
+export const actions = {
+  mount: ({ name, index }: Init) => ({ type: 'TABS/INIT', name, index }: Init),
+  select: ({ name, index }: Select) => ({ type: 'TABS/SELECT', name, index }: Select),
+}
+
 export type Store = { components: { tabs: Reducer } }
 
 export const selectors = {
