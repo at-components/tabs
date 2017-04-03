@@ -9,9 +9,10 @@ export type InitAction = { type: 'TABS/INIT' } & Init
 export type SelectAction = { type: 'TABS/SELECT' } & Select
 export type Actions = InitAction | SelectAction
 
+export type ReduxAction<LocalActions> = LocalActions | Object
 export type Reducer = {} | { [tabName: string]: number }
 
-export default function reducer(state: Reducer = {}, action: Actions) {
+export default function reducer(state: Reducer = {}, action: ReduxAction<Actions>) {
   switch (action.type) {
     case INIT:
     case SELECT:

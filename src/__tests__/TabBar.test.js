@@ -1,4 +1,4 @@
-/* eslint-disable no-unused-vars */
+// @flow
 import React from 'react'
 import { ConnectedTabBar } from '../TabBar'
 import reducer, { actions, selectors } from '../reducer'
@@ -11,12 +11,12 @@ const MockButton = ({ onSelect }) => (
 describe('onMount', () => {
   test('calls 0 as default', () => {
     const handleMount = jest.fn()
-    const rendered = mount(<ConnectedTabBar onMount={ handleMount } />)
+    mount(<ConnectedTabBar onMount={ handleMount } />)
     expect(handleMount).toBeCalledWith(0)
   })
   test('calls 1 when selectedIndex = 1', () => {
     const handleMount = jest.fn()
-    const rendered = mount(<ConnectedTabBar selectedIndex={ 1 } onMount={ handleMount } />)
+    mount(<ConnectedTabBar selectedIndex={ 1 } onMount={ handleMount } />)
     expect(handleMount).toBeCalledWith(1)
   })
 })
