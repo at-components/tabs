@@ -17,7 +17,7 @@ const TabBar = ({ name, children, activeIndex, onSelect }: TabBarProps) => {
     <div>
       { React.Children.map(children, (child, index: number) =>
         React.cloneElement(child, {
-          onSelectTab: handleSelect({ name, index }),
+          onSelect: handleSelect({ name, index }),
           active: index === activeIndex,
         }),
       ) }

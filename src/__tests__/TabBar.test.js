@@ -4,8 +4,8 @@ import { ConnectedTabBar } from '../TabBar'
 import reducer, { actions, selectors } from '../reducer'
 import { shallow, mount } from 'enzyme'
 
-const MockButton = ({ onSelectTab }) => (
-  <div onClick={ onSelectTab } className="button">Button</div>
+const MockButton = ({ onSelect }) => (
+  <div onClick={ onSelect } className="button">Button</div>
 )
 
 describe('onMount', () => {
@@ -31,13 +31,13 @@ describe('children', () => {
     expect(rendered.find(MockButton)).toHaveLength(1)
   })
 
-  test('should get onSelectTab', () => {
+  test('should get onSelect', () => {
     const rendered = mount(
       <ConnectedTabBar>
         <MockButton />
       </ConnectedTabBar>,
     )
-    expect(rendered.find(MockButton).first().props()).toHaveProperty('onSelectTab')
+    expect(rendered.find(MockButton).first().props()).toHaveProperty('onSelect')
   })
 
   test('should know if they are active', () => {
@@ -62,7 +62,7 @@ describe('children', () => {
 })
 
 describe('onSelect', () => {
-  test('should get called when onSelectTab gets called', () => {
+  test('should get called when onSelect gets called', () => {
     const handleSelect = jest.fn()
     const rendered = mount(
       <ConnectedTabBar name="TestingSelect" onSelect={ handleSelect }>
