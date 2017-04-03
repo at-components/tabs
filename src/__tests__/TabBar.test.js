@@ -8,15 +8,34 @@ const MockButton = ({ onSelect }) => (
   <div onClick={ onSelect } className="button">Button</div>
 )
 
+const requiredProps = {
+  id: 'test',
+  selectedIndex: 0,
+  activeIndex: 0,
+  onMount: () => {},
+  onSelect: () => {},
+}
+
 describe('onMount', () => {
   test('calls 0 as default', () => {
     const handleMount = jest.fn()
-    mount(<ConnectedTabBar onMount={ handleMount } />)
+    mount(
+      <ConnectedTabBar
+        { ...requiredProps }
+        onMount={ handleMount }
+      />,
+    )
     expect(handleMount).toBeCalledWith(0)
   })
   test('calls 1 when selectedIndex = 1', () => {
     const handleMount = jest.fn()
-    mount(<ConnectedTabBar selectedIndex={ 1 } onMount={ handleMount } />)
+    mount(
+      <ConnectedTabBar
+        { ...requiredProps }
+        selectedIndex={ 1 }
+        onMount={ handleMount }
+      />,
+    )
     expect(handleMount).toBeCalledWith(1)
   })
 })
@@ -24,7 +43,7 @@ describe('onMount', () => {
 describe('children', () => {
   test('should get passed down', () => {
     const rendered = shallow(
-      <ConnectedTabBar>
+      <ConnectedTabBar { ...requiredProps }>
         <MockButton />
       </ConnectedTabBar>,
     )
@@ -33,7 +52,7 @@ describe('children', () => {
 
   test('should get onSelect', () => {
     const rendered = mount(
-      <ConnectedTabBar>
+      <ConnectedTabBar { ...requiredProps }>
         <MockButton />
       </ConnectedTabBar>,
     )
@@ -42,7 +61,7 @@ describe('children', () => {
 
   test('should know if they are active', () => {
     const rendered = mount(
-      <ConnectedTabBar activeIndex={ 0 }>
+      <ConnectedTabBar { ...requiredProps } activeIndex={ 0 }>
         <MockButton />
       </ConnectedTabBar>,
     )
@@ -51,7 +70,7 @@ describe('children', () => {
 
   test('should have second child active', () => {
     const rendered = mount(
-      <ConnectedTabBar activeIndex={ 1 }>
+      <ConnectedTabBar { ...requiredProps } activeIndex={ 1 }>
         <MockButton />
         <MockButton />
       </ConnectedTabBar>,
@@ -65,7 +84,11 @@ describe('onSelect', () => {
   test('should get called when onSelect gets called', () => {
     const handleSelect = jest.fn()
     const rendered = mount(
-      <ConnectedTabBar id="TestingSelect" onSelect={ handleSelect }>
+      <ConnectedTabBar
+        { ...requiredProps }
+        id="TestingSelect"
+        onSelect={ handleSelect }
+      >
         <MockButton />
       </ConnectedTabBar>,
     )
@@ -76,7 +99,11 @@ describe('onSelect', () => {
   test('curry should relay the right index', () => {
     const handleSelect = jest.fn()
     const rendered = mount(
-      <ConnectedTabBar id="TestingSelect" onSelect={ handleSelect }>
+      <ConnectedTabBar
+        { ...requiredProps }
+        id="TestingSelect"
+        onSelect={ handleSelect }
+      >
         <MockButton />
         <MockButton />
       </ConnectedTabBar>,

@@ -4,14 +4,14 @@ import { connect } from 'react-redux'
 import { actions, selectors } from './reducer'
 import type { Store } from './reducer'
 
-type TabBarProps = {
+type InternalTabBarProps = {
   id: string,
   children?: React.Children,
   activeIndex: number,
   onSelect: ({ index: number, id: string }) => void
 }
 
-const TabBar = ({ id, children, activeIndex, onSelect }: TabBarProps) => {
+const InternalTabBar = ({ id, children, activeIndex, onSelect }: InternalTabBarProps) => {
   const handleSelect = data => () => onSelect(data)
   return (
     <div>
@@ -25,9 +25,9 @@ const TabBar = ({ id, children, activeIndex, onSelect }: TabBarProps) => {
   )
 }
 
-type ConnectedTabBarProps = TabBarProps & {
-  onMount: (index: number) => void,
+type ConnectedTabBarProps = InternalTabBarProps & {
   selectedIndex: number,
+  onMount: (index: number) => void,
 }
 
 export class ConnectedTabBar extends React.Component {
@@ -44,23 +44,29 @@ export class ConnectedTabBar extends React.Component {
 
   render() {
     return (
-      <TabBar
+      <InternalTabBar
         id={ this.props.id }
         index={ 1 }
         onSelect={ this.props.onSelect }
         activeIndex={ this.props.activeIndex }
       >
         { this.props.children }
-      </TabBar>
+      </InternalTabBar>
     )
   }
 }
 
-export default connect(
+type TabBar = {
+  id: string,
+  children: React.Children,
+  selectedIndex?: number
+}
+
+export default (connect(
   (state: Store, ownProps: ConnectedTabBarProps) => ({
     activeIndex: selectors.getActiveIndexById(state, ownProps.id),
   }), {
     onMount: actions.init,
     onSelect: actions.select,
   },
-)(ConnectedTabBar)
+)(ConnectedTabBar): TabBar)
