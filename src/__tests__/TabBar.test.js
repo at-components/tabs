@@ -25,7 +25,10 @@ describe('onMount', () => {
         onMount={ handleMount }
       />,
     )
-    expect(handleMount).toBeCalledWith(0)
+    expect(handleMount).toBeCalledWith({
+      id: 'test',
+      index: 0,
+    })
   })
   test('calls 1 when selectedIndex = 1', () => {
     const handleMount = jest.fn()
@@ -36,7 +39,10 @@ describe('onMount', () => {
         onMount={ handleMount }
       />,
     )
-    expect(handleMount).toBeCalledWith(1)
+    expect(handleMount).toBeCalledWith({
+      id: 'test',
+      index: 1,
+    })
   })
 })
 

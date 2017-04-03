@@ -2,13 +2,13 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { actions, selectors } from './reducer'
-import type { Store } from './reducer'
+import type { Store, SelectParams, InitParams } from './reducer'
 
 type PresentationalTabBarProps = {
   id: string,
   children?: React.Children,
   activeIndex: number,
-  onSelect: ({ index: number, id: string }) => void
+  onSelect: (SelectParams) => void
 }
 
 const PresentationalTabBar = ({ id, children, activeIndex, onSelect }:
@@ -28,7 +28,7 @@ const PresentationalTabBar = ({ id, children, activeIndex, onSelect }:
 
 type ConnectedTabBarProps = PresentationalTabBarProps & {
   selectedIndex: number,
-  onMount: (index: number) => void,
+  onMount: (InitParams) => void,
 }
 
 export class ConnectedTabBar extends React.Component {
@@ -40,7 +40,10 @@ export class ConnectedTabBar extends React.Component {
   }
 
   componentDidMount() {
-    this.props.onMount(this.props.selectedIndex)
+    this.props.onMount({
+      id: this.props.id,
+      index: this.props.selectedIndex,
+    })
   }
 
   render() {
@@ -57,7 +60,7 @@ export class ConnectedTabBar extends React.Component {
   }
 }
 
-type TabBar = {
+export type TabBar = {
   id: string,
   children: React.Children,
   selectedIndex?: number
