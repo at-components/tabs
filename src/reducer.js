@@ -2,9 +2,12 @@
 export const INIT: string = 'TABS/INIT'
 export const SELECT: string = 'TABS/SELECT'
 
-export type Init = { type: 'TABS/INIT', id: string, index: number }
-export type Select = { type: 'TABS/SELECT', id: string, index: number }
-export type Actions = Init | Select
+export type Init = { id: string, index: number }
+export type Select = { id: string, index: number }
+
+export type InitAction = { type: 'TABS/INIT' } & Init
+export type SelectAction = { type: 'TABS/SELECT' } & Select
+export type Actions = InitAction | SelectAction
 
 export type Reducer = {} | { [tabName: string]: number }
 
@@ -21,8 +24,8 @@ export default function reducer(state: Reducer = {}, action: Actions) {
 }
 
 export const actions = {
-  init: ({ id, index }: Init) => ({ type: 'TABS/INIT', id, index }: Init),
-  select: ({ id, index }: Select) => ({ type: 'TABS/SELECT', id, index }: Select),
+  init: ({ id, index }: Init) => ({ type: 'TABS/INIT', id, index }: InitAction),
+  select: ({ id, index }: Select) => ({ type: 'TABS/SELECT', id, index }: SelectAction),
 }
 
 export type Store = { components: { tabs: Reducer } }
