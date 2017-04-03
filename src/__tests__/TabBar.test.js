@@ -65,24 +65,24 @@ describe('onSelect', () => {
   test('should get called when onSelect gets called', () => {
     const handleSelect = jest.fn()
     const rendered = mount(
-      <ConnectedTabBar name="TestingSelect" onSelect={ handleSelect }>
+      <ConnectedTabBar id="TestingSelect" onSelect={ handleSelect }>
         <MockButton />
       </ConnectedTabBar>,
     )
     rendered.find('.button').simulate('click')
-    expect(handleSelect).toBeCalledWith({ name: 'TestingSelect', index: 0 })
+    expect(handleSelect).toBeCalledWith({ id: 'TestingSelect', index: 0 })
   })
 
   test('curry should relay the right index', () => {
     const handleSelect = jest.fn()
     const rendered = mount(
-      <ConnectedTabBar name="TestingSelect" onSelect={ handleSelect }>
+      <ConnectedTabBar id="TestingSelect" onSelect={ handleSelect }>
         <MockButton />
         <MockButton />
       </ConnectedTabBar>,
     )
     rendered.find('.button').last().simulate('click')
-    expect(handleSelect).toBeCalledWith({ name: 'TestingSelect', index: 1 })
+    expect(handleSelect).toBeCalledWith({ id: 'TestingSelect', index: 1 })
   })
 })
 
@@ -93,7 +93,7 @@ describe('reducer', () => {
 
   test('should initlize tab bar', () => {
     const action = actions.init({
-      name: 'Testing',
+      id: 'Testing',
       index: 0,
     })
     expect(reducer({}, action)).toEqual({
@@ -103,7 +103,7 @@ describe('reducer', () => {
 
   test('should update index on select', () => {
     const action = actions.init({
-      name: 'Testing',
+      id: 'Testing',
       index: 2,
     })
     expect(reducer({
@@ -121,18 +121,18 @@ const makeStore = tabs => ({
 })
 
 describe('selectors', () => {
-  describe('getActiveIndexByName', () => {
+  describe('getActiveIndexById', () => {
     test('should return a tab if its initilized', () => {
       const state = makeStore({ Header: 2 })
       expect(
-        selectors.getActiveIndexByName(state, { name: 'Header' }),
+        selectors.getActiveIndexById(state, { id: 'Header' }),
       ).toBe(2)
     })
 
     test('should return undefined if it doesnt exist', () => {
       const state = makeStore({})
       expect(
-        selectors.getActiveIndexByName(state, { name: 'Header' }),
+        selectors.getActiveIndexById(state, { id: 'Header' }),
       ).toBeUndefined()
     })
   })

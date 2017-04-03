@@ -5,19 +5,19 @@ import { actions, selectors } from './reducer'
 import type { Store } from './reducer'
 
 type TabBarProps = {
-  name: string,
+  id: string,
   children?: React.Children,
   activeIndex: number,
-  onSelect: ({ index: number, name: string }) => void
+  onSelect: ({ index: number, id: string }) => void
 }
 
-const TabBar = ({ name, children, activeIndex, onSelect }: TabBarProps) => {
+const TabBar = ({ id, children, activeIndex, onSelect }: TabBarProps) => {
   const handleSelect = data => () => onSelect(data)
   return (
     <div>
       { React.Children.map(children, (child, index: number) =>
         React.cloneElement(child, {
-          onSelect: handleSelect({ name, index }),
+          onSelect: handleSelect({ id, index }),
           active: index === activeIndex,
         }),
       ) }
@@ -45,7 +45,7 @@ export class ConnectedTabBar extends React.Component {
   render() {
     return (
       <TabBar
-        name={ this.props.name }
+        id={ this.props.id }
         index={ 1 }
         onSelect={ this.props.onSelect }
         activeIndex={ this.props.activeIndex }
@@ -58,7 +58,7 @@ export class ConnectedTabBar extends React.Component {
 
 export default connect(
   (state: Store, ownProps: ConnectedTabBarProps) => ({
-    activeIndex: selectors.getActiveIndexByName(state, ownProps.name),
+    activeIndex: selectors.getActiveIndexById(state, ownProps.id),
   }), {
     onMount: actions.init,
     onSelect: actions.select,
