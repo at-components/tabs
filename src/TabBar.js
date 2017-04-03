@@ -60,17 +60,17 @@ export class ConnectedTabBar extends React.Component {
   }
 }
 
-export type TabBar = {
+export type TabBarProps = {
   id: string,
   children: React.Children,
   selectedIndex?: number
 }
 
 export default (connect(
-  (state: Store, ownProps: ConnectedTabBarProps) => ({
+  (state: Store, ownProps: TabBarProps) => ({
     activeIndex: selectors.getActiveIndexById(state, ownProps.id),
   }), {
     onMount: actions.init,
     onSelect: actions.select,
   },
-)(ConnectedTabBar): TabBar)
+)(ConnectedTabBar): TabBarProps)

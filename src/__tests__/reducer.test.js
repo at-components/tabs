@@ -39,14 +39,14 @@ describe('selectors', () => {
     test('should return a tab if its initilized', () => {
       const state = makeStore({ Header: 2 })
       expect(
-        selectors.getActiveIndexById(state, { id: 'Header' }),
+        selectors.getActiveIndexById(state, 'Header'),
       ).toBe(2)
     })
 
     test('should return undefined if it doesnt exist', () => {
       const state = makeStore({})
       expect(
-        selectors.getActiveIndexById(state, { id: 'Header' }),
+        selectors.getActiveIndexById(state, 'Header'),
       ).toBeUndefined()
     })
   })

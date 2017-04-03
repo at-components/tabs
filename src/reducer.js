@@ -31,5 +31,5 @@ export const actions = {
 }
 
 export const selectors = {
-  getActiveIndexById: (state: Store, { id }: { id: string }) => state.components.tabs[id],
+  getActiveIndexById: (state: Store, id: string) => state.components.tabs[id],
 }
