@@ -15,7 +15,7 @@ const PresentationalTabBar = ({ id, children, activeIndex, onSelect }:
   PresentationalTabBarProps) => {
   const handleSelect = data => () => onSelect(data)
   return (
-    <div>
+    <div style={{ display: 'flex' }}>
       { React.Children.map(children, (child, index: number) =>
         React.cloneElement(child, {
           onSelect: handleSelect({ id, index }),
