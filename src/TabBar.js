@@ -14,10 +14,15 @@ type PresentationalTabBarProps = {
 const PresentationalTabBar = ({ id, children, activeIndex, onSelect }:
   PresentationalTabBarProps) => {
   const handleSelect = data => () => onSelect(data)
+  const tabs = []
+  React.Children.forEach(children, child => child && tabs.push(child))
+
   return (
     <div style={{ display: 'flex' }}>
-      { React.Children.map(children, (child, index: number) =>
+      { tabs.map((child, index: number) =>
         React.cloneElement(child, {
+          // eslint-disable-next-line react/no-array-index-key
+          key: `${ child.key }-${ index }`,
           onSelect: handleSelect({ id, index }),
           active: index === activeIndex,
         }),

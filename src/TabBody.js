@@ -10,8 +10,11 @@ export type ConnectedTabBodyProps = {
 }
 
 export const ConnectedTabBody = ({ children, activeIndex }: ConnectedTabBodyProps) => {
+  const tabs = []
   let activeBody = null
-  React.Children.forEach(children, (child, i) => {
+  React.Children.forEach(children, child => child && tabs.push(child))
+
+  tabs.forEach((child, i) => {
     if (i === activeIndex) {
       activeBody = child
     }

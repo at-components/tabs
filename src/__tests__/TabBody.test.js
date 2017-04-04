@@ -37,4 +37,27 @@ describe('children', () => {
     expect(rendered.children()).toHaveLength(0)
     expect(rendered.html()).toEqual(null)
   })
+
+  test('should not count undefined or null children', () => {
+    const rendered = shallow(
+      <ConnectedTabBody activeIndex={ 1 }>
+        <div>first</div>
+        { undefined }
+        { null }
+        <div>last</div>
+      </ConnectedTabBody>,
+    )
+    expect(rendered.html()).toEqual('<div>last</div>')
+  })
+
+  test('should skip undefined or null children as active', () => {
+    const rendered = shallow(
+      <ConnectedTabBody activeIndex={ 0 }>
+        { undefined }
+        { null }
+        <div>last</div>
+      </ConnectedTabBody>,
+    )
+    expect(rendered.html()).toEqual('<div>last</div>')
+  })
 })

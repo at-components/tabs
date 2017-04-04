@@ -83,6 +83,29 @@ describe('children', () => {
     expect(rendered.find(MockButton).first().props()).toHaveProperty('active', false)
     expect(rendered.find(MockButton).last().props()).toHaveProperty('active', true)
   })
+
+  test('should not count undefined or null children', () => {
+    const rendered = mount(
+      <ConnectedTabBar { ...requiredProps } activeIndex={ 1 }>
+        <MockButton />
+        <MockButton />
+        { undefined }
+        { null }
+      </ConnectedTabBar>,
+    )
+    expect(rendered.children()).toHaveLength(2)
+  })
+
+  test('should skip undefined or null children as active', () => {
+    const rendered = mount(
+      <ConnectedTabBar { ...requiredProps }>
+        { undefined }
+        { null }
+        <MockButton />
+      </ConnectedTabBar>,
+    )
+    expect(rendered.find(MockButton).props()).toHaveProperty('active', true)
+  })
 })
 
 describe('onSelect', () => {
