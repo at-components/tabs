@@ -7,7 +7,6 @@
     "clean": "rm -rf lib && mkdir lib",
     "flow": "flow",
     "lint": "eslint src/**/*.js",
-    "postinstall": "flow-typed install",
     "prepublish": "npm run build",
     "test": "jest"
   },
