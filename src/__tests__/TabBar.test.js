@@ -117,11 +117,11 @@ describe('onSelect', () => {
         kind="TestingSelect"
         onSelect={ handleSelect }
       >
-        <MockButton />
+        <MockButton name="home" />
       </ConnectedTabBar>,
     )
     rendered.find('.button').simulate('click')
-    expect(handleSelect).toBeCalledWith({ kind: 'TestingSelect', index: 0 })
+    expect(handleSelect).toBeCalledWith({ kind: 'TestingSelect', name: 'home', index: 0 })
   })
 
   test('curry should relay the right index', () => {
@@ -132,11 +132,11 @@ describe('onSelect', () => {
         kind="TestingSelect"
         onSelect={ handleSelect }
       >
-        <MockButton />
-        <MockButton />
+        <MockButton name="home" />
+        <MockButton name="contact" />
       </ConnectedTabBar>,
     )
     rendered.find('.button').last().simulate('click')
-    expect(handleSelect).toBeCalledWith({ kind: 'TestingSelect', index: 1 })
+    expect(handleSelect).toBeCalledWith({ kind: 'TestingSelect', name: 'contact', index: 1 })
   })
 })

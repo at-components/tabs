@@ -23,7 +23,7 @@ const PresentationalTabBar = ({ kind, children, activeIndex, onSelect }:
         React.cloneElement(child, {
           // eslint-disable-next-line react/no-array-index-key
           key: `${ child.key }-${ index }`,
-          onSelect: handleSelect({ kind, index }),
+          onSelect: handleSelect({ kind, name: child.props.name, index }),
           active: index === activeIndex,
         }),
       ) }
@@ -73,7 +73,7 @@ export type TabBarProps = {
 
 export default (connect(
   (state: Store, ownProps: TabBarProps) => ({
-    activeIndex: selectors.getActiveIndexById(state, ownProps.id),
+    activeIndex: selectors.getActiveIndexByKind(state, ownProps.id),
   }), {
     onMount: actions.init,
     onSelect: actions.select,

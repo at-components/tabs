@@ -8,22 +8,33 @@ describe('reducer', () => {
   test('should initlize tab bar', () => {
     const action = actions.init({
       kind: 'Testing',
+      name: 'home',
       index: 0,
     })
     expect(reducer({}, action)).toEqual({
-      'Testing': 0,
+      'Testing': {
+        name: 'home',
+        index: 0,
+      },
     })
   })
 
   test('should update index on select', () => {
     const action = actions.init({
       kind: 'Testing',
+      name: 'abount',
       index: 2,
     })
     expect(reducer({
-      'Testing': 0,
+      'Testing': {
+        name: 'home',
+        index: 0,
+      },
     }, action)).toEqual({
-      'Testing': 2,
+      'Testing': {
+        name: 'abount',
+        index: 2,
+      },
     })
   })
 })
@@ -35,18 +46,21 @@ const makeStore = tabs => ({
 })
 
 describe('selectors', () => {
-  describe('getActiveIndexById', () => {
+  describe('getActiveIndexByKind', () => {
     test('should return a tab if its initilized', () => {
-      const state = makeStore({ Header: 2 })
+      const state = makeStore({ Header: {
+        name: 'about',
+        index: 2,
+      } })
       expect(
-        selectors.getActiveIndexById(state, 'Header'),
+        selectors.getActiveIndexByKind(state, 'Header'),
       ).toBe(2)
     })
 
     test('should return undefined if it doesnt exist', () => {
       const state = makeStore({})
       expect(
-        selectors.getActiveIndexById(state, 'Header'),
+        selectors.getActiveIndexByKind(state, 'Header'),
       ).toBeUndefined()
     })
   })

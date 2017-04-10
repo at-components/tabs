@@ -29,6 +29,6 @@ export type TabBodyProps = {
 
 export default (connect(
   (state: Store, ownProps: TabBodyProps) => ({
-    activeIndex: selectors.getActiveIndexById(state, ownProps.kind),
+    activeIndex: selectors.getActiveIndexByKind(state, ownProps.kind),
   }),
 )(ConnectedTabBody): TabBodyProps)
