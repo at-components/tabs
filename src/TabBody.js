@@ -23,12 +23,12 @@ export const ConnectedTabBody = ({ children, activeIndex }: ConnectedTabBodyProp
 }
 
 export type TabBodyProps = {
-  id: string,
+  kind: string,
   children: React.Children,
 }
 
 export default (connect(
   (state: Store, ownProps: TabBodyProps) => ({
-    activeIndex: selectors.getActiveIndexById(state, ownProps.id),
+    activeIndex: selectors.getActiveIndexById(state, ownProps.kind),
   }),
 )(ConnectedTabBody): TabBodyProps)

@@ -7,7 +7,7 @@ describe('reducer', () => {
 
   test('should initlize tab bar', () => {
     const action = actions.init({
-      id: 'Testing',
+      kind: 'Testing',
       index: 0,
     })
     expect(reducer({}, action)).toEqual({
@@ -17,7 +17,7 @@ describe('reducer', () => {
 
   test('should update index on select', () => {
     const action = actions.init({
-      id: 'Testing',
+      kind: 'Testing',
       index: 2,
     })
     expect(reducer({

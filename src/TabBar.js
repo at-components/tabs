@@ -5,13 +5,13 @@ import { actions, selectors } from './reducer'
 import type { Store, SelectParams, InitParams } from './reducer'
 
 type PresentationalTabBarProps = {
-  id: string,
+  kind: string,
   children?: React.Children,
   activeIndex: number,
   onSelect: (SelectParams) => void
 }
 
-const PresentationalTabBar = ({ id, children, activeIndex, onSelect }:
+const PresentationalTabBar = ({ kind, children, activeIndex, onSelect }:
   PresentationalTabBarProps) => {
   const handleSelect = data => () => onSelect(data)
   const tabs = []
@@ -23,7 +23,7 @@ const PresentationalTabBar = ({ id, children, activeIndex, onSelect }:
         React.cloneElement(child, {
           // eslint-disable-next-line react/no-array-index-key
           key: `${ child.key }-${ index }`,
-          onSelect: handleSelect({ id, index }),
+          onSelect: handleSelect({ kind, index }),
           active: index === activeIndex,
         }),
       ) }
@@ -46,7 +46,7 @@ export class ConnectedTabBar extends React.Component {
 
   componentDidMount() {
     this.props.onMount({
-      id: this.props.id,
+      kind: this.props.kind,
       index: this.props.selectedIndex,
     })
   }
@@ -54,7 +54,7 @@ export class ConnectedTabBar extends React.Component {
   render() {
     return (
       <PresentationalTabBar
-        id={ this.props.id }
+        kind={ this.props.kind }
         index={ 1 }
         onSelect={ this.props.onSelect }
         activeIndex={ this.props.activeIndex }

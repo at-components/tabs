@@ -8,7 +8,7 @@ const MockButton = ({ onSelect }) => (
 )
 
 const requiredProps = {
-  id: 'test',
+  kind: 'test',
   selectedIndex: 0,
   activeIndex: 0,
   onMount: () => {},
@@ -25,7 +25,7 @@ describe('onMount', () => {
       />,
     )
     expect(handleMount).toBeCalledWith({
-      id: 'test',
+      kind: 'test',
       index: 0,
     })
   })
@@ -39,7 +39,7 @@ describe('onMount', () => {
       />,
     )
     expect(handleMount).toBeCalledWith({
-      id: 'test',
+      kind: 'test',
       index: 1,
     })
   })
@@ -114,14 +114,14 @@ describe('onSelect', () => {
     const rendered = mount(
       <ConnectedTabBar
         { ...requiredProps }
-        id="TestingSelect"
+        kind="TestingSelect"
         onSelect={ handleSelect }
       >
         <MockButton />
       </ConnectedTabBar>,
     )
     rendered.find('.button').simulate('click')
-    expect(handleSelect).toBeCalledWith({ id: 'TestingSelect', index: 0 })
+    expect(handleSelect).toBeCalledWith({ kind: 'TestingSelect', index: 0 })
   })
 
   test('curry should relay the right index', () => {
@@ -129,7 +129,7 @@ describe('onSelect', () => {
     const rendered = mount(
       <ConnectedTabBar
         { ...requiredProps }
-        id="TestingSelect"
+        kind="TestingSelect"
         onSelect={ handleSelect }
       >
         <MockButton />
@@ -137,6 +137,6 @@ describe('onSelect', () => {
       </ConnectedTabBar>,
     )
     rendered.find('.button').last().simulate('click')
-    expect(handleSelect).toBeCalledWith({ id: 'TestingSelect', index: 1 })
+    expect(handleSelect).toBeCalledWith({ kind: 'TestingSelect', index: 1 })
   })
 })

@@ -2,8 +2,8 @@
 export const INIT: string = 'TABS/INIT'
 export const SELECT: string = 'TABS/SELECT'
 
-export type InitParams = { id: string, index: number }
-export type SelectParams = { id: string, index: number }
+export type InitParams = { kind: string, index: number }
+export type SelectParams = { kind: string, index: number }
 
 export type InitAction = { type: 'TABS/INIT' } & InitParams
 export type SelectAction = { type: 'TABS/SELECT' } & SelectParams
@@ -19,17 +19,17 @@ export default function reducer(state: Reducer = {}, action: ReduxAction<Actions
     case SELECT:
       return {
         ...state,
-        [action.id]: action.index,
+        [action.kind]: action.index,
       }
     default: return state
   }
 }
 
 export const actions = {
-  init: ({ id, index }: InitParams) => ({ type: 'TABS/INIT', id, index }: InitAction),
-  select: ({ id, index }: SelectParams) => ({ type: 'TABS/SELECT', id, index }: SelectAction),
+  init: ({ kind, index }: InitParams) => ({ type: 'TABS/INIT', kind, index }: InitAction),
+  select: ({ kind, index }: SelectParams) => ({ type: 'TABS/SELECT', kind, index }: SelectAction),
 }
 
 export const selectors = {
-  getActiveIndexById: (state: Store, id: string) => state.components.tabs[id],
+  getActiveIndexById: (state: Store, kind: string) => state.components.tabs[kind],
 }
