@@ -5,35 +5,21 @@ describe('reducer', () => {
     expect(reducer(undefined, {})).toEqual({})
   })
 
-  test('should initlize tab bar', () => {
-    const action = actions.init({
+  test('should update on select', () => {
+    const action = actions.select({
       kind: 'Testing',
-      name: 'home',
-      index: 0,
+      name: 'amount',
     })
-    expect(reducer({}, action)).toEqual({
-      'Testing': {
-        name: 'home',
-        index: 0,
-      },
-    })
-  })
 
-  test('should update index on select', () => {
-    const action = actions.init({
-      kind: 'Testing',
-      name: 'abount',
-      index: 2,
-    })
     expect(reducer({
       'Testing': {
+        kind: 'Testing',
         name: 'home',
-        index: 0,
       },
     }, action)).toEqual({
       'Testing': {
-        name: 'abount',
-        index: 2,
+        kind: 'Testing',
+        name: 'amount',
       },
     })
   })
@@ -46,22 +32,25 @@ const makeStore = tabs => ({
 })
 
 describe('selectors', () => {
-  describe('getActiveIndexByKind', () => {
-    test('should return a tab if its initilized', () => {
+  describe('getSelectedTabByKind', () => {
+    test('should return a tab if its selected', () => {
       const state = makeStore({ Header: {
+        kind: 'Header',
         name: 'about',
-        index: 2,
       } })
       expect(
-        selectors.getActiveIndexByKind(state, 'Header'),
-      ).toBe(2)
+        selectors.getSelectedTabByKind(state, 'Header'),
+      ).toEqual({
+        kind: 'Header',
+        name: 'about',
+      })
     })
 
     test('should return undefined if it doesnt exist', () => {
       const state = makeStore({})
       expect(
-        selectors.getActiveIndexByKind(state, 'Header'),
-      ).toBeUndefined()
+        selectors.getSelectedTabByKind(state, 'Header'),
+      ).toEqual({})
     })
   })
 })
