@@ -38,7 +38,7 @@ export const TabBar = ({ selectedTab, initialTab, kind, children, onSelect }: Ta
 
 export default connect(
   (state: Store, ownProps: TabBarProps) => ({
-    activeIndex: selectors.getSelectedTabByKind(state, ownProps.kind),
+    selectedTab: selectors.getSelectedTabByKind(state, ownProps.kind),
   }), {
     onSelect: actions.select,
   },

@@ -22,6 +22,6 @@ export const TabBody = ({ children, selectedTab }: TabBodyProps) => {
 
 export default connect(
   (state: Store, ownProps: TabBodyProps & { kind: string }) => ({
-    activeIndex: selectors.getSelectedTabByKind(state, ownProps.kind),
+    selectedTab: selectors.getSelectedTabByKind(state, ownProps.kind),
   }),
 )(TabBody)
