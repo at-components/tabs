@@ -1,5 +1,5 @@
 {
-  "version": "0.3.0",
+  "version": "0.3.1",
   "name": "@components/tabs",
   "main": "lib/index.js",
   "scripts": {
