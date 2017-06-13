@@ -4,31 +4,24 @@ import { connect } from 'react-redux'
 import { selectors } from './reducer'
 import type { Store } from './reducer'
 
-export type ConnectedTabBodyProps = {
-  activeIndex: number,
+export type TabBodyProps = {
+  selectedTab?: string,
   children?: React.Children
 }
 
-export const ConnectedTabBody = ({ children, activeIndex }: ConnectedTabBodyProps) => {
-  const tabs = []
-  let activeBody = null
-  React.Children.forEach(children, child => child && tabs.push(child))
-
-  tabs.forEach((child, i) => {
-    if (i === activeIndex) {
-      activeBody = child
+export const TabBody = ({ children, selectedTab }: TabBodyProps) => {
+  let body = null
+  React.Children.forEach(children, (tabBody) => {
+    if (tabBody && tabBody.props.name === selectedTab) {
+      body = tabBody
     }
   })
-  return activeBody
+
+  return body
 }
 
-export type TabBodyProps = {
-  kind: string,
-  children: React.Children,
-}
-
-export default (connect(
-  (state: Store, ownProps: TabBodyProps) => ({
-    activeIndex: selectors.getActiveIndexByKind(state, ownProps.kind),
+export default connect(
+  (state: Store, ownProps: TabBodyProps & { kind: string }) => ({
+    activeIndex: selectors.getSelectedTabByKind(state, ownProps.kind),
   }),
-)(ConnectedTabBody): TabBodyProps)
+)(TabBody)

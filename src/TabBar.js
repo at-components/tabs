@@ -2,80 +2,44 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { actions, selectors } from './reducer'
-import type { Store, SelectParams, InitParams } from './reducer'
+import type { Store, SelectParams } from './reducer'
+import { recursiveCloneChildren } from './helpers'
 
-type PresentationalTabBarProps = {
+type TabBarProps = {
   kind: string,
   children?: React.Children,
-  activeIndex: number,
+  selectedTab?: string,
+  initialTab?: string,
   onSelect: (SelectParams) => void
 }
 
-const PresentationalTabBar = ({ kind, children, activeIndex, onSelect }:
-  PresentationalTabBarProps) => {
-  const handleSelect = data => () => onSelect(data)
-  const tabs = []
-  React.Children.forEach(children, child => child && tabs.push(child))
+export const TabBar = ({ selectedTab, initialTab, kind, children, onSelect }: TabBarProps) => {
+  let initialized = selectedTab !== undefined
+  if (!initialized && initialTab) {
+    onSelect({ kind, name: initialTab })
+    initialized = true
+  }
 
   return (
-    <div style={{ display: 'flex' }}>
-      { tabs.map((child, index: number) =>
-        React.cloneElement(child, {
-          // eslint-disable-next-line react/no-array-index-key
-          key: `${ child.key }-${ index }`,
-          onSelect: handleSelect({ kind, name: child.props.name, index }),
-          active: index === activeIndex,
-        }),
-      ) }
+    <div>
+      { recursiveCloneChildren(children, (tab) => {
+        const { name } = tab.props
+        if (!initialized && tab) {
+          onSelect({ kind, name })
+        }
+        return {
+          onSelect: () => onSelect({ kind, name }),
+          active: selectedTab === name,
+        }
+      }) }
     </div>
   )
 }
 
-type ConnectedTabBarProps = PresentationalTabBarProps & {
-  selectedIndex: number,
-  onMount: (InitParams) => void,
-}
-
-export class ConnectedTabBar extends React.Component {
-  props: ConnectedTabBarProps
-
-  static defaultProps = {
-    selectedIndex: 0,
-    onMount: () => {},
-  }
-
-  componentDidMount() {
-    this.props.onMount({
-      kind: this.props.kind,
-      index: this.props.selectedIndex,
-    })
-  }
-
-  render() {
-    return (
-      <PresentationalTabBar
-        kind={ this.props.kind }
-        index={ 1 }
-        onSelect={ this.props.onSelect }
-        activeIndex={ this.props.activeIndex }
-      >
-        { this.props.children }
-      </PresentationalTabBar>
-    )
-  }
-}
-
-export type TabBarProps = {
-  id: string,
-  children: React.Children,
-  selectedIndex?: number
-}
-
-export default (connect(
+export default connect(
   (state: Store, ownProps: TabBarProps) => ({
-    activeIndex: selectors.getActiveIndexByKind(state, ownProps.id),
+    activeIndex: selectors.getSelectedTabByKind(state, ownProps.kind),
   }), {
-    onMount: actions.init,
     onSelect: actions.select,
   },
-)(ConnectedTabBar): TabBarProps)
+)(TabBar)

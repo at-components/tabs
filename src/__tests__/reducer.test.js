@@ -7,20 +7,14 @@ describe('reducer', () => {
 
   test('should update on select', () => {
     const action = actions.select({
-      kind: 'Testing',
+      kind: 'testing',
       name: 'amount',
     })
 
     expect(reducer({
-      'Testing': {
-        kind: 'Testing',
-        name: 'home',
-      },
+      'testing': 'home',
     }, action)).toEqual({
-      'Testing': {
-        kind: 'Testing',
-        name: 'amount',
-      },
+      'testing': 'amount',
     })
   })
 })
@@ -34,23 +28,17 @@ const makeStore = tabs => ({
 describe('selectors', () => {
   describe('getSelectedTabByKind', () => {
     test('should return a tab if its selected', () => {
-      const state = makeStore({ Header: {
-        kind: 'Header',
-        name: 'about',
-      } })
+      const state = makeStore({ header: 'about' })
       expect(
-        selectors.getSelectedTabByKind(state, 'Header'),
-      ).toEqual({
-        kind: 'Header',
-        name: 'about',
-      })
+        selectors.getSelectedTabByKind(state, 'header'),
+      ).toEqual('about')
     })
 
     test('should return undefined if it doesnt exist', () => {
       const state = makeStore({})
       expect(
-        selectors.getSelectedTabByKind(state, 'Header'),
-      ).toEqual({})
+        selectors.getSelectedTabByKind(state, 'header'),
+      ).toEqual(undefined)
     })
   })
 })

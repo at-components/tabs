@@ -14,10 +14,7 @@ export default function reducer(state: Reducer = {}, action: Actions) {
     case SELECT:
       return {
         ...state,
-        [action.kind]: {
-          kind: action.kind,
-          name: action.name,
-        },
+        [action.kind]: action.name,
       }
     default: return state
   }
@@ -28,5 +25,5 @@ export const actions = {
 }
 
 export const selectors = {
-  getSelectedTabByKind: (state: Store, kind: string) => state.components.tabs[kind] || {},
+  getSelectedTabByKind: (state: Store, kind: string) => state.components.tabs[kind],
 }
