@@ -13,7 +13,7 @@ type TabBarProps = {
   onSelect: (SelectParams) => void
 }
 
-export const TabBar = ({ selectedTab, initialTab, kind, children, onSelect }: TabBarProps) => {
+export const TabBar = ({ selectedTab, initialTab, kind, children, onSelect, ...rest }: TabBarProps) => {
   let initialized = selectedTab !== undefined
   if (!initialized && initialTab) {
     onSelect({ kind, name: initialTab })
@@ -21,7 +21,7 @@ export const TabBar = ({ selectedTab, initialTab, kind, children, onSelect }: Ta
   }
 
   return (
-    <div>
+    <div { ...rest }>
       { recursiveCloneChildren(children, (tab) => {
         const { name } = tab.props
         if (!initialized && tab) {

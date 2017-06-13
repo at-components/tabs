@@ -125,6 +125,15 @@ describe('children', () => {
   })
 })
 
+describe('div', () => {
+  test('should get any extra props', () => {
+    const rendered = mount(
+      <TabBar className="foo" style={{ color: 'red' }} />,
+    )
+    expect(rendered.html()).toEqual('<div class="foo" style="color: red;"></div>')
+  })
+})
+
 describe('onSelect', () => {
   test('should get called when onSelect gets called', () => {
     const handleSelect = jest.fn()
