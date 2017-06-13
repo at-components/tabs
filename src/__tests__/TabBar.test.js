@@ -41,13 +41,24 @@ describe('render', () => {
     })
   })
 
+  test('fires onSelect only once', () => {
+    const handleSelect = jest.fn()
+    mount(
+      <TabBar { ...requiredProps } selectedTab={ undefined } onSelect={ handleSelect }>
+        <MockButton name="foo" />
+        <MockButton name="bar" />
+      </TabBar>,
+    )
+    expect(handleSelect.mock.calls.length).toBe(1)
+  })
+
   test('calls another tab when no selected tab and initilTab is set', () => {
     const handleSelect = jest.fn()
     mount(
       <TabBar
         { ...requiredProps }
         selectedTab={ undefined }
-        initilTab="bar"
+        initialTab="bar"
         onSelect={ handleSelect }
       >
         <MockButton name="foo" />

@@ -26,6 +26,7 @@ export const TabBar = ({ selectedTab, initialTab, kind, children, onSelect }: Ta
         const { name } = tab.props
         if (!initialized && tab) {
           onSelect({ kind, name })
+          initialized = true
         }
         return {
           onSelect: () => onSelect({ kind, name }),
