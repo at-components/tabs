@@ -10,7 +10,11 @@ export const recursiveCloneChildren = (children?: React.Children,
       child,
       isComponent(child)
         ? calculateProps(child)
-        : { children: recursiveCloneChildren(child.props.children, calculateProps) },
+        : {
+          children: child.props
+            ? recursiveCloneChildren(child.props.children, calculateProps)
+            : null,
+        },
     ) : null
   })
 }
